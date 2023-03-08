@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Listado de Mascotas</h1>
+
+    
+
+    <div th:each = "mascota : ${mascotas}">
+        <p th:text = "${mascota.nombre}"></p>
+        <p th:text = "${mascota.edad}"></p>
+        <p th:text = "${mascota.descripcion}"></p>
+        <p th:text = "${mascota.tipoMascota}"></p>
+        <img th:src = "@{/images/{i} (i = ${mascota.imagen})}" width="126" height="126">
+        <p th:text = "${mascota.diponibleAdopcion} ? 'Activo' : 'Inactivo'"></p>
+        
+        <br>
+    </div>
+    
+</body>
+</html>

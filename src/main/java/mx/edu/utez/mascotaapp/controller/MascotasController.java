@@ -3,13 +3,18 @@ package mx.edu.utez.mascotaapp.controller;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -31,9 +36,12 @@ public class MascotasController {
         System.out.println(String.format("Lista de mascotas: %s", listaMascotas));
         model.addAttribute("mascotas", listaMascotas);
         // List<MascotasModel> listaMascota = new LinkedList<>();
-        // listaMascota.add(new MascotasModel("Bethoven", 5, "Perrito Bonito", "perro", "perrito1.jpg", true));
-        // listaMascota.add(new MascotasModel("Dazter", 8, "Gato Bonito", "gato", "gato1.jpg", true));
-        // listaMascota.add(new MascotasModel("Bethoven", 7, "Perrito Bonito", "perro", "perro2.jpg", true));
+        // listaMascota.add(new MascotasModel("Bethoven", 5, "Perrito Bonito", "perro",
+        // "perrito1.jpg", true));
+        // listaMascota.add(new MascotasModel("Dazter", 8, "Gato Bonito", "gato",
+        // "gato1.jpg", true));
+        // listaMascota.add(new MascotasModel("Bethoven", 7, "Perrito Bonito", "perro",
+        // "perro2.jpg", true));
         // model.addAttribute("mascotas", listaMascota);
         return "index";
     }
@@ -43,28 +51,37 @@ public class MascotasController {
         System.out.println("Entro");
         String tipo = pathMaps.get("tipo");
         String adoptado = pathMaps.get("adoptado");
-        
+
+        listaMascotas.clear();
+
         if (adoptado == null) {
             if (tipo.equals("perro")) {
-                listaMascotas.add(new MascotasModel("Bethoven", 5, "Perrito Bonito", "perro", "perrito1.jpg", true));
-                listaMascotas.add(new MascotasModel("Camila", 7, "Perrito Bonito", "perro", "perro2.jpg", false));
+                listaMascotas.add(
+                        new MascotasModel("Bethoven", 5, "Perrito Bonito", "perro", "perrito1.jpg", true, new Date()));
+                listaMascotas.add(
+                        new MascotasModel("Camila", 7, "Perrito Bonito", "perro", "perro2.jpg", false, new Date()));
             } else if (tipo.equals("gato")) {
-                listaMascotas.add(new MascotasModel("Dazter", 8, "Gato Bonito", "gato", "gato1.jpg", true));
-                listaMascotas.add(new MascotasModel("Garfield", 9, "Gato Gruñon", "gato", "gato1.jpg", false));
+                listaMascotas.add(new MascotasModel("Dazter", 8, "Gato Bonito", "gato", "gato1.jpg", true, new Date()));
+                listaMascotas
+                        .add(new MascotasModel("Garfield", 9, "Gato Gruñon", "gato", "gato1.jpg", false, new Date()));
 
             } else if (tipo.equals("inicio")) {
-                listaMascotas.add(new MascotasModel("Bethoven", 5, "Perrito Bonito", "perro", "perrito1.jpg", true));
-                listaMascotas.add(new MascotasModel("Dazter", 8, "Gato Bonito", "gato", "gato1.jpg", true));
-                listaMascotas.add(new MascotasModel("Bethoven", 7, "Perrito Bonito", "perro", "perro2.jpg", true));
-                listaMascotas.add(new MascotasModel("Garfield", 9, "Gato Gruñon", "gato", "gato1.jpg", false));
+                listaMascotas.add(
+                        new MascotasModel("Bethoven", 5, "Perrito Bonito", "perro", "perrito1.jpg", true, new Date()));
+                listaMascotas.add(new MascotasModel("Dazter", 8, "Gato Bonito", "gato", "gato1.jpg", true, new Date()));
+                listaMascotas.add(
+                        new MascotasModel("Bethoven", 7, "Perrito Bonito", "perro", "perro2.jpg", true, new Date()));
+                listaMascotas
+                        .add(new MascotasModel("Garfield", 9, "Gato Gruñon", "gato", "gato1.jpg", false, new Date()));
             }
         } else {
             if (tipo.equals("perro")) {
-                listaMascotas.add(new MascotasModel("Bethoven", 5, "Perrito Bonito", "perro", "perrito1.jpg", true));
+                listaMascotas.add(
+                        new MascotasModel("Bethoven", 5, "Perrito Bonito", "perro", "perrito1.jpg", true, new Date()));
             } else if (tipo.equals("gato")) {
-                listaMascotas.add(new MascotasModel("Dazter", 8, "Gato Bonito", "gato", "gato1.jpg", true));
+                listaMascotas.add(new MascotasModel("Dazter", 8, "Gato Bonito", "gato", "gato1.jpg", true, new Date()));
             }
-            
+
         }
 
         model.addAttribute("listado", listaMascotas);
@@ -80,39 +97,47 @@ public class MascotasController {
 
     // @PostMapping(value = "/{tipo}/save")
     // public String addNewPet(@PathVariable String tipo,
-    //         @RequestParam("nombre") String nombre,
-    //         @RequestParam("edad") Integer edad,
-    //         @RequestParam("descripcion") String descripcion,
-    //         @RequestParam(name = "diponibleAdopcion", required = false, defaultValue = "true") boolean disponibleAdopcion,
-    //         Model model) {
+    // @RequestParam("nombre") String nombre,
+    // @RequestParam("edad") Integer edad,
+    // @RequestParam("descripcion") String descripcion,
+    // @RequestParam(name = "diponibleAdopcion", required = false, defaultValue =
+    // "true") boolean disponibleAdopcion,
+    // Model model) {
 
-    //     String tipoMascota = null, imagen = null;
-    //     System.out.println(disponibleAdopcion);
-    //     if (tipo.equals("perro")) {
-    //         tipoMascota = "perro";
-    //         imagen = "perrito1.jpg";
-    //     } else {
-    //         tipoMascota = "gato";
-    //         imagen = "gato1.jpg";
-    //     }
-
-    //     MascotasModel mascota = new MascotasModel();
-    //     mascota.setNombre(nombre);
-    //     mascota.setEdad(edad);
-    //     mascota.setDescripcion(descripcion);
-    //     mascota.setTipoMascota(tipoMascota);
-    //     mascota.setImagen(imagen);
-    //     listaMascotas.add(mascota);
-    //     model.addAttribute("listado", listaMascotas);
-    //     model.addAttribute("tipo", tipo);
-    //     return "listado";
+    // String tipoMascota = null, imagen = null;
+    // System.out.println(disponibleAdopcion);
+    // if (tipo.equals("perro")) {
+    // tipoMascota = "perro";
+    // imagen = "perrito1.jpg";
+    // } else {
+    // tipoMascota = "gato";
+    // imagen = "gato1.jpg";
     // }
 
-        @PostMapping(value = "/{tipo}/save")
-        public String savedPet (MascotasModel mascotas, Model model){
-            mascotaService.guardarMascota(mascotas);
+    // MascotasModel mascota = new MascotasModel();
+    // mascota.setNombre(nombre);
+    // mascota.setEdad(edad);
+    // mascota.setDescripcion(descripcion);
+    // mascota.setTipoMascota(tipoMascota);
+    // mascota.setImagen(imagen);
+    // listaMascotas.add(mascota);
+    // model.addAttribute("listado", listaMascotas);
+    // model.addAttribute("tipo", tipo);
+    // return "listado";
+    // }
 
-            return "redirect:/mascotas/listar";
-        }
+    @PostMapping(value = "/{tipo}/save")
+    public String savedPet(MascotasModel mascotas, Model model) {
+        mascotaService.guardarMascota(mascotas);
+
+        return "redirect:/mascotas/listar";
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder webDataBinder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        webDataBinder.registerCustomEditor(Date.class ,
+        new CustomDateEditor(dateFormat, false));
+    }
 
 }

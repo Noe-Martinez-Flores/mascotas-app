@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import mx.edu.utez.mascotaapp.model.MascotasModel;
 
 import java.util.LinkedList;
+import java.util.Date;
 
 @Service
 public class MascotasService implements IMascotaService{
@@ -16,10 +17,10 @@ public class MascotasService implements IMascotaService{
 
     public void llenarLista(){
         listaMascotas = new LinkedList<>();
-        listaMascotas.add(new MascotasModel("Roky",3,"Perro tactico","perro","perrito1.jpg",true));
-        listaMascotas.add(new MascotasModel("Mandy",3,"Gato tactico","gato","gato1.jpg",true));
-        listaMascotas.add(new MascotasModel("cindy",3,"Gato tactico","gato","gato1.jpg",true));
-        listaMascotas.add(new MascotasModel("katy",3,"Perro tactico","perro","perrito1.jpg",true));
+        listaMascotas.add(new MascotasModel("Roky",3,"Perro tactico","perro","perrito1.jpg",true, new Date()));
+        listaMascotas.add(new MascotasModel("Mandy",3,"Gato tactico","gato","gato1.jpg",true, new Date()));
+        listaMascotas.add(new MascotasModel("cindy",3,"Gato tactico","gato","gato1.jpg",true, new Date()));
+        listaMascotas.add(new MascotasModel("katy",3,"Perro tactico","perro","perrito1.jpg",true, new Date()));
 
     }
 

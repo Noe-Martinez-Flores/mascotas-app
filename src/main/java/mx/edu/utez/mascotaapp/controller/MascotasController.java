@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -90,7 +92,8 @@ public class MascotasController {
     }
 
     @GetMapping(value = "/listar/{tipo}/form")
-    public String formMascota(@PathVariable String tipo, Model model) {
+    public String formMascota( MascotasModel mascotas,@PathVariable String tipo, Model model) {
+        model.addAttribute("mascotas", mascotas);
         model.addAttribute("tipo", tipo);
         return "formMascota";
     }
@@ -127,12 +130,16 @@ public class MascotasController {
     // }
 
     @PostMapping(value = "/{tipo}/save")
-    public String savedPet(@PathVariable String tipo,MascotasModel mascotas, Model model) {
-       
-        if ( tipo.equals("perro")) {
+    public String savedPet(@ModelAttribute("mascotas") MascotasModel mascotas, BindingResult results,@PathVariable String tipo,  Model model) {
+        if (results.hasErrors()) {
+            return "formMascota";
+           
+        }
+
+        if (tipo.equals("perro")) {
             mascotas.setTipoMascota("perro");
             mascotas.setImagen("perrito1.jpg");
-        } else if ( tipo.equals("gato")){
+        } else if (tipo.equals("gato")) {
             mascotas.setTipoMascota("gato");
             mascotas.setImagen("gato1.jpg");
         }
@@ -142,13 +149,14 @@ public class MascotasController {
         model.addAttribute("tipado", tipo);
         model.addAttribute("listado", listaMascotas);
         return "listado";
+
     }
 
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        webDataBinder.registerCustomEditor(Date.class ,
-        new CustomDateEditor(dateFormat, false));
+        webDataBinder.registerCustomEditor(Date.class,
+                new CustomDateEditor(dateFormat, false));
     }
 
 }

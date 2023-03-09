@@ -63,8 +63,7 @@
         <!-- <form th:action = "@{/mascotas/listar/{i}/save (i = ${tipado})}" method="GET">
           <button class="btn btn-outline-success"  > Agregar </button>
         </form> -->
-
-        <button class="btn btn-outline-success"  id="buttonMoveForm" th:onclick = "functionMoveToForm()"> Agregar </button>
+        <a class="btn btn-outline-success"  id="buttonMoveForm" th:href = "@{/mascotas/listar/{i}/form (i = ${tipado})}"> Agregar </a>
        
         
       </div>
@@ -87,6 +86,7 @@
                 <p class="text-class">
                   <p th:text = "${lista.diponibleAdopcion} ? 'En adopción' : 'No en Adopcion'"></p>
                 </p>
+                <p th:text = "${lista.descripcion}"></p>
                 <p th:text = "${lista.fechaRegistro}"></p>
                 <a href="#" class="btn btn-primary">Go somewhere</a>
               </div>

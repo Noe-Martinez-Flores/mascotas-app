@@ -13,10 +13,10 @@ import java.util.Date;
 public class MascotasService implements IMascotaService{
 
 
-    private List<MascotasModel> listaMascotas = null;
+    private List<MascotasModel> listaMascotas = new LinkedList<>();
 
     public void llenarLista(){
-        listaMascotas = new LinkedList<>();
+        
         listaMascotas.add(new MascotasModel("Roky",3,"Perro tactico","perro","perrito1.jpg",true, new Date()));
         listaMascotas.add(new MascotasModel("Mandy",3,"Gato tactico","gato","gato1.jpg",true, new Date()));
         listaMascotas.add(new MascotasModel("cindy",3,"Gato tactico","gato","gato1.jpg",true, new Date()));

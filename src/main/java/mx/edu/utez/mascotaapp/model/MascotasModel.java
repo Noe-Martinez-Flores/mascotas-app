@@ -115,11 +115,15 @@ public class MascotasModel {
     }
 
 
+
     @Override
     public String toString() {
         return "MascotasModel [id=" + id + ", nombre=" + nombre + ", edad=" + edad + ", descripcion=" + descripcion
                 + ", tipoMascota=" + tipoMascota + ", imagen=" + imagen + ", diponibleAdopcion=" + diponibleAdopcion
-                + "]";
+                + ", fechaRegistro=" + fechaRegistro + "]";
     }
+
+
+    
 
 }

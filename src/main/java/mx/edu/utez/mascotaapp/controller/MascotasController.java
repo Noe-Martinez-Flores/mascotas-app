@@ -127,10 +127,21 @@ public class MascotasController {
     // }
 
     @PostMapping(value = "/{tipo}/save")
-    public String savedPet(MascotasModel mascotas, Model model) {
+    public String savedPet(@PathVariable String tipo,MascotasModel mascotas, Model model) {
+       
+        if ( tipo.equals("perro")) {
+            mascotas.setTipoMascota("perro");
+            mascotas.setImagen("perrito1.jpg");
+        } else if ( tipo.equals("gato")){
+            mascotas.setTipoMascota("gato");
+            mascotas.setImagen("gato1.jpg");
+        }
         mascotaService.guardarMascota(mascotas);
-
-        return "redirect:/mascotas/listar";
+        System.out.println(mascotas.toString());
+        listaMascotas = mascotaService.listarMascotas();
+        model.addAttribute("tipado", tipo);
+        model.addAttribute("listado", listaMascotas);
+        return "listado";
     }
 
     @InitBinder

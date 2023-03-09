@@ -11,7 +11,6 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,14 +36,6 @@ public class MascotasController {
         listaMascotas = mascotaService.listarMascotas();
         System.out.println(String.format("Lista de mascotas: %s", listaMascotas));
         model.addAttribute("mascotas", listaMascotas);
-        // List<MascotasModel> listaMascota = new LinkedList<>();
-        // listaMascota.add(new MascotasModel("Bethoven", 5, "Perrito Bonito", "perro",
-        // "perrito1.jpg", true));
-        // listaMascota.add(new MascotasModel("Dazter", 8, "Gato Bonito", "gato",
-        // "gato1.jpg", true));
-        // listaMascota.add(new MascotasModel("Bethoven", 7, "Perrito Bonito", "perro",
-        // "perro2.jpg", true));
-        // model.addAttribute("mascotas", listaMascota);
         return "index";
     }
 
@@ -97,37 +88,6 @@ public class MascotasController {
         model.addAttribute("tipo", tipo);
         return "formMascota";
     }
-
-    // @PostMapping(value = "/{tipo}/save")
-    // public String addNewPet(@PathVariable String tipo,
-    // @RequestParam("nombre") String nombre,
-    // @RequestParam("edad") Integer edad,
-    // @RequestParam("descripcion") String descripcion,
-    // @RequestParam(name = "diponibleAdopcion", required = false, defaultValue =
-    // "true") boolean disponibleAdopcion,
-    // Model model) {
-
-    // String tipoMascota = null, imagen = null;
-    // System.out.println(disponibleAdopcion);
-    // if (tipo.equals("perro")) {
-    // tipoMascota = "perro";
-    // imagen = "perrito1.jpg";
-    // } else {
-    // tipoMascota = "gato";
-    // imagen = "gato1.jpg";
-    // }
-
-    // MascotasModel mascota = new MascotasModel();
-    // mascota.setNombre(nombre);
-    // mascota.setEdad(edad);
-    // mascota.setDescripcion(descripcion);
-    // mascota.setTipoMascota(tipoMascota);
-    // mascota.setImagen(imagen);
-    // listaMascotas.add(mascota);
-    // model.addAttribute("listado", listaMascotas);
-    // model.addAttribute("tipo", tipo);
-    // return "listado";
-    // }
 
     @PostMapping(value = "/{tipo}/save")
     public String savedPet(@ModelAttribute("mascotas") MascotasModel mascotas, BindingResult results,@PathVariable String tipo,  Model model) {

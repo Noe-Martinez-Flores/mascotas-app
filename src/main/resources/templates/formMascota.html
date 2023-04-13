@@ -114,6 +114,18 @@
 
         <hr />
 
+        <div class = "form-group">
+          <!-- seleccione una fecha -->
+          <label>Caracter</label>
+
+          <select class="form-control" th:field="*{caracter.id}">
+            <option th:each = "caracterTmp : ${caracteres}" th:value = "${caracterTmp.id}" th:text = "${caracterTmp.nombre}"></option>
+          </select>
+
+        </div>
+
+        <hr />
+
         <button type="submit" class="btn btn-primary">Guardar</button>`
 
         <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">

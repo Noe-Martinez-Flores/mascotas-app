@@ -6,6 +6,8 @@ import java.util.Map;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import mx.edu.utez.mascotaapp.model.Caracter;
+import mx.edu.utez.mascotaapp.service.CatacterServImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,9 @@ public class MascotasController {
     @Autowired
     private MascotasService mascotaService;
 
+    @Autowired
+    private CatacterServImp caracterService;
+
     List<MascotasModel> listaMascotas = new LinkedList<>();
 
     @GetMapping(value = "/listar")
@@ -50,29 +55,29 @@ public class MascotasController {
         if (adoptado == null) {
             if (tipo.equals("perro")) {
                 listaMascotas.add(
-                        new MascotasModel("Bethoven", 5, "Perrito Bonito", "perro", "perrito1.jpg", true, new Date()));
+                        new MascotasModel("Bethoven", 5, "Perrito Bonito", "perro", "perrito1.jpg", true, new Date(), new Caracter(1, "Cariñoso")));
                 listaMascotas.add(
-                        new MascotasModel("Camila", 7, "Perrito Bonito", "perro", "perro2.jpg", false, new Date()));
+                        new MascotasModel("Camila", 7, "Perrito Bonito", "perro", "perro2.jpg", false, new Date(), new Caracter(2, "Jugueton")));
             } else if (tipo.equals("gato")) {
-                listaMascotas.add(new MascotasModel("Dazter", 8, "Gato Bonito", "gato", "gato1.jpg", true, new Date()));
+                listaMascotas.add(new MascotasModel("Dazter", 8, "Gato Bonito", "gato", "gato1.jpg", true, new Date(), new Caracter(3, "Mimoso")));
                 listaMascotas
-                        .add(new MascotasModel("Garfield", 9, "Gato Gruñon", "gato", "gato1.jpg", false, new Date()));
+                        .add(new MascotasModel("Garfield", 9, "Gato Gruñon", "gato", "gato1.jpg", false, new Date(), new Caracter(4, "Cariñoso")));
 
             } else if (tipo.equals("inicio")) {
                 listaMascotas.add(
-                        new MascotasModel("Bethoven", 5, "Perrito Bonito", "perro", "perrito1.jpg", true, new Date()));
-                listaMascotas.add(new MascotasModel("Dazter", 8, "Gato Bonito", "gato", "gato1.jpg", true, new Date()));
+                        new MascotasModel("Bethoven", 5, "Perrito Bonito", "perro", "perrito1.jpg", true, new Date(), new Caracter(5, "Jugueton")));
+                listaMascotas.add(new MascotasModel("Dazter", 8, "Gato Bonito", "gato", "gato1.jpg", true, new Date(),new Caracter(6, "Mimoso")));
                 listaMascotas.add(
-                        new MascotasModel("Bethoven", 7, "Perrito Bonito", "perro", "perro2.jpg", true, new Date()));
+                        new MascotasModel("Bethoven", 7, "Perrito Bonito", "perro", "perro2.jpg", true, new Date(), new Caracter(7, "Cariñoso")));
                 listaMascotas
-                        .add(new MascotasModel("Garfield", 9, "Gato Gruñon", "gato", "gato1.jpg", false, new Date()));
+                        .add(new MascotasModel("Garfield", 9, "Gato Gruñon", "gato", "gato1.jpg", false, new Date(), new Caracter(8, "Jugueton")));
             }
         } else {
             if (tipo.equals("perro")) {
                 listaMascotas.add(
-                        new MascotasModel("Bethoven", 5, "Perrito Bonito", "perro", "perrito1.jpg", true, new Date()));
+                        new MascotasModel("Bethoven", 5, "Perrito Bonito", "perro", "perrito1.jpg", true, new Date(), new Caracter(9, "Mimoso")));
             } else if (tipo.equals("gato")) {
-                listaMascotas.add(new MascotasModel("Dazter", 8, "Gato Bonito", "gato", "gato1.jpg", true, new Date()));
+                listaMascotas.add(new MascotasModel("Dazter", 8, "Gato Bonito", "gato", "gato1.jpg", true, new Date(), new Caracter(10, "Cariñoso")));
             }
 
         }
@@ -86,6 +91,9 @@ public class MascotasController {
     public String formMascota( MascotasModel mascotas,@PathVariable String tipo, Model model) {
         model.addAttribute("mascotas", mascotas);
         model.addAttribute("tipo", tipo);
+        List<Caracter> listaCaracteres = caracterService.findAll();
+        System.out.println(caracterService.findAll().toString());
+        model.addAttribute("caracteres", listaCaracteres);
         return "formMascota";
     }
 

@@ -2,6 +2,7 @@ package mx.edu.utez.mascotaapp.service;
 
 import java.util.List;
 
+import mx.edu.utez.mascotaapp.model.Caracter;
 import org.springframework.stereotype.Service;
 
 import mx.edu.utez.mascotaapp.model.MascotasModel;
@@ -17,10 +18,10 @@ public class MascotasService implements IMascotaService{
 
     public void llenarLista(){
         
-        listaMascotas.add(new MascotasModel("Roky",3,"Perro tactico","perro","perrito1.jpg",true, new Date()));
-        listaMascotas.add(new MascotasModel("Mandy",3,"Gato tactico","gato","gato1.jpg",true, new Date()));
-        listaMascotas.add(new MascotasModel("cindy",3,"Gato tactico","gato","gato1.jpg",true, new Date()));
-        listaMascotas.add(new MascotasModel("katy",3,"Perro tactico","perro","perrito1.jpg",true, new Date()));
+        listaMascotas.add(new MascotasModel("Roky",3,"Perro tactico","perro","perrito1.jpg",true, new Date(), new Caracter(1, "Cariñoso")));
+        listaMascotas.add(new MascotasModel("Mandy",3,"Gato tactico","gato","gato1.jpg",true, new Date(), new Caracter(2, "Jugueton")));
+        listaMascotas.add(new MascotasModel("cindy",3,"Gato tactico","gato","gato1.jpg",true, new Date(), new Caracter(3, "Mimoso")));
+        listaMascotas.add(new MascotasModel("katy",3,"Perro tactico","perro","perrito1.jpg",true, new Date(), new Caracter(4, "Cariñoso")));
 
     }
 
